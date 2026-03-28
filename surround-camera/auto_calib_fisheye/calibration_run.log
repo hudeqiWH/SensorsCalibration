@@ -1,0 +1,149 @@
+[0;34m[INFO][0m ==========================================
+[0;34m[INFO][0m Ocam 相机标定与验证
+[0;34m[INFO][0m ==========================================
+[0;34m[INFO][0m 检查并自动修复常见问题...
+[0;32m[SUCCESS][0m 自动修复完成
+[0;34m[INFO][0m 检查输入文件...
+[0;32m[SUCCESS][0m 找到 Ocam 文件: 2_dog/param/park_front.json
+[0;32m[SUCCESS][0m 找到 Ocam 文件: 2_dog/param/park_left.json
+[0;32m[SUCCESS][0m 找到 Ocam 文件: 2_dog/param/park_back.json
+[0;32m[SUCCESS][0m 找到 Ocam 文件: 2_dog/param/park_right.json
+[0;32m[SUCCESS][0m 找到图像: 2_dog/imgs/ParkFront-1774583477301602000.png
+[0;32m[SUCCESS][0m 找到图像: 2_dog/imgs/ParkLeft-1774583477034621000.png
+[0;32m[SUCCESS][0m 找到图像: 2_dog/imgs/ParkBack-1774583477301602000.png
+[0;32m[SUCCESS][0m 找到图像: 2_dog/imgs/ParkRight-1774583477101370000.png
+[0;32m[SUCCESS][0m 找到外参文件: /home/nio/deqi/r_calib/data/trans/camera_extrinsics_ikalibr.json5
+[0;32m[SUCCESS][0m 所有输入文件检查通过
+[0;34m[INFO][0m 创建输出目录: ./2_dog/calibration_20260327_182020
+[0;32m[SUCCESS][0m 输出目录创建成功
+[0;34m[INFO][0m 开始运行标定...
+[0;34m[INFO][0m 相机模型: Ocam (1)
+[0;34m[INFO][0m 输出目录: ./2_dog/calibration_20260327_182020
+[0;34m[INFO][0m 预计时间: 20-30 秒
+extrinsic_front:
+1 0 0 0
+0 1 0 0
+0 0 1 0
+0 0 0 1
+eular:
+ 0
+-0
+ 0
+extrinsic_left:
+1 0 0 0
+0 1 0 0
+0 0 1 0
+0 0 0 1
+eular:
+ 0
+-0
+ 0
+extrinsic_right:
+1 0 0 0
+0 1 0 0
+0 0 1 0
+0 0 0 1
+eular:
+ 0
+-0
+ 0
+extrinsic_behind:
+1 0 0 0
+0 1 0 0
+0 0 1 0
+0 0 0 1
+eular:
+ 0
+-0
+ 0
+Loading Ocam calibration files...
+Loading Ocam calibration parameters...
+Front camera: 1920x1536
+Left camera: 1920x1536
+Behind camera: 1920x1536
+Right camera: 1920x1536
+
+==========================================
+Loading extrinsics from: /home/nio/deqi/r_calib/data/trans/camera_extrinsics_ikalibr.json5
+==========================================
+Loaded front extrinsics:
+  Rotation (Euler): -88.9874 -1.21054 -90.7254
+  Translation: [     0.258 -0.0483678   0.160335]
+Loaded left extrinsics:
+  Rotation (Euler):  1.06313 -0.47924 -92.5787
+  Translation: [ 0.01 0.145  0.16]
+Loaded behind extrinsics:
+  Rotation (Euler):    89.1746 -0.0531494   -87.2178
+  Translation: [   -0.1301 -0.0293629       0.16]
+Loaded right extrinsics:
+  Rotation (Euler):   177.046 -0.484272  -91.2442
+  Translation: [    0.01   -0.215 0.162746]
+==========================================
+*********************************start right*************************************
+**************************************1st****************************************
+time:5.13844
+luminorsity loss before pre opt:2.14748e+09
+luminorsity loss after pre opt:2.14748e+09
+extrinsic after pre opt:
+7.26355e-317 1.33587e-315 6.17507e-310 6.95316e-310
+6.17507e-310            0 6.17507e-310 6.17507e-310
+6.17505e-310 6.95316e-310 4.64867e-315 2.96439e-323
+6.17507e-310 6.17507e-310 6.95316e-310 6.17507e-310
+best search parameters:
+0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 
+**************************************2nd****************************************
+time:7.349711
+luminorsity loss after opt:2147483647.000000
+extrinsic after opt:
+0.000000 0.000000 0.000000 0.000000
+0.000000 0.000000 0.000000 0.000000
+0.000000 0.000000 0.000000 0.000000
+0.000000 0.000000 0.000000 0.000000
+best search parameters:
+0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 
+**************************************3rd****************************************
+time:4.499605
+luminorsity loss after opt:2147483647.000000
+extrinsic after opt:
+0.000000 0.000000 0.000000 0.000000
+0.000000 0.000000 0.000000 0.000000
+0.000000 0.000000 0.000000 0.000000
+0.000000 0.000000 0.000000 0.000000
+best search parameters:
+0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 
+right calibration time: 16.987752s
+*********************************start left**************************************
+**************************************1st****************************************
+time:6.326376
+luminorsity loss before pre opt:0.000000
+luminorsity loss after pre opt:0.000000
+extrinsic after pre opt:
+0.000000 0.000000 0.000000 0.000000
+0.000000 0.000000 0.000000 0.000000
+0.000000 0.000000 0.000000 0.000000
+0.000000 0.000000 0.000000 0.000000
+best search parameters:
+0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 
+**************************************2nd****************************************
+time:6.667924
+luminorsity loss after opt:0.000000
+extrinsic after opt:
+0.000000 0.000000 0.000000 0.000000
+0.000000 0.000000 0.000000 0.000000
+0.000000 0.000000 0.000000 0.000000
+0.000000 0.000000 0.000000 0.000000
+best search parameters:
+0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 
+**************************************3rd****************************************
+time:3.945506
+luminorsity loss after opt:0.000000
+extrinsic after opt:
+0.000000 0.000000 0.000000 0.000000
+0.000000 0.000000 0.000000 0.000000
+0.000000 0.000000 0.000000 0.000000
+0.000000 0.000000 0.000000 0.000000
+best search parameters:
+0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 
+left calibration time: 16.939807s
+timeout: the monitored command dumped core
+[0;31m[ERROR][0m 标定失败，退出码: 136

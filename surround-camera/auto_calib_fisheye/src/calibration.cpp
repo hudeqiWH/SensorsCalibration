@@ -21,6 +21,7 @@
 #include <thread>
 #include <time.h>
 #include <vector>
+#include <unistd.h>
 
 using namespace cv;
 using namespace std;
@@ -43,52 +44,52 @@ double CameraOptimization(Optimizer &opt, string cameraType) {
     auto start_calib = chrono::steady_clock::now();
     if (cameraType == "right") {
       int iter_nums = 100000;
-      threads[0] = thread(&Optimizer::Calibrate_right, &opt, iter_nums, -3, 3,
-                          -3, 3, -3, 3, -0.01, 0.01, -0.01, 0.01, -0.01, 0.01);
-      threads[1] = thread(&Optimizer::Calibrate_right, &opt, iter_nums, -3, 0,
-                          -3, 3, -3, 3, -0.01, 0.01, -0.01, 0.01, -0.01, 0.01);
-      threads[2] = thread(&Optimizer::Calibrate_right, &opt, iter_nums, 0, 3,
-                          -3, 3, -3, 3, -0.01, 0.01, -0.01, 0.01, -0.01, 0.01);
-      threads[3] = thread(&Optimizer::Calibrate_right, &opt, iter_nums, -3, 3,
-                          -3, 0, -3, 3, -0.01, 0.01, -0.01, 0.01, -0.01, 0.01);
-      threads[4] = thread(&Optimizer::Calibrate_right, &opt, iter_nums, -3, 3,
-                          0, 3, -3, 3, -0.01, 0.01, -0.01, 0.01, -0.01, 0.01);
-      threads[5] = thread(&Optimizer::Calibrate_right, &opt, iter_nums, -3, 3,
-                          -3, 3, -3, 0, -0.01, 0.01, -0.01, 0.01, -0.01, 0.01);
-      threads[6] = thread(&Optimizer::Calibrate_right, &opt, iter_nums, -3, 3,
-                          -3, 3, 0, 3, -0.01, 0.01, -0.01, 0.01, -0.01, 0.01);
+      threads[0] = thread(&Optimizer::Calibrate_right, &opt, iter_nums, -15, 15,
+                          -15, 15, -15, 15, -0.05, 0.05, -0.05, 0.05, -0.05, 0.05);
+      threads[1] = thread(&Optimizer::Calibrate_right, &opt, iter_nums, -15, 0,
+                          -15, 15, -15, 15, -0.05, 0.05, -0.05, 0.05, -0.05, 0.05);
+      threads[2] = thread(&Optimizer::Calibrate_right, &opt, iter_nums, 0, 15,
+                          -15, 15, -15, 15, -0.05, 0.05, -0.05, 0.05, -0.05, 0.05);
+      threads[3] = thread(&Optimizer::Calibrate_right, &opt, iter_nums, -15, 15,
+                          -15, 0, -15, 15, -0.05, 0.05, -0.05, 0.05, -0.05, 0.05);
+      threads[4] = thread(&Optimizer::Calibrate_right, &opt, iter_nums, -15, 15,
+                          0, 15, -15, 15, -0.05, 0.05, -0.05, 0.05, -0.05, 0.05);
+      threads[5] = thread(&Optimizer::Calibrate_right, &opt, iter_nums, -15, 15,
+                          -15, 15, -15, 0, -0.05, 0.05, -0.05, 0.05, -0.05, 0.05);
+      threads[6] = thread(&Optimizer::Calibrate_right, &opt, iter_nums, -15, 15,
+                          -15, 15, 0, 15, -0.05, 0.05, -0.05, 0.05, -0.05, 0.05);
     } else if (cameraType == "left") {
       int iter_nums = 100000;
-      threads[0] = thread(&Optimizer::Calibrate_left, &opt, iter_nums, -3, 3,
-                          -3, 3, -3, 3, -0.01, 0.01, -0.01, 0.01, -0.01, 0.01);
-      threads[1] = thread(&Optimizer::Calibrate_left, &opt, iter_nums, -3, 0,
-                          -3, 3, -3, 3, -0.01, 0.01, -0.01, 0.01, -0.01, 0.01);
-      threads[2] = thread(&Optimizer::Calibrate_left, &opt, iter_nums, 0, 3, -3,
-                          3, -3, 3, -0.01, 0.01, -0.01, 0.01, -0.01, 0.01);
-      threads[3] = thread(&Optimizer::Calibrate_left, &opt, iter_nums, -3, 3,
-                          -3, 0, -3, 3, -0.01, 0.01, -0.01, 0.01, -0.01, 0.01);
-      threads[4] = thread(&Optimizer::Calibrate_left, &opt, iter_nums, -3, 3, 0,
-                          3, -3, 3, -0.01, 0.01, -0.01, 0.01, -0.01, 0.01);
-      threads[5] = thread(&Optimizer::Calibrate_left, &opt, iter_nums, -3, 3,
-                          -3, 3, -3, 0, -0.01, 0.01, -0.01, 0.01, -0.01, 0.01);
-      threads[6] = thread(&Optimizer::Calibrate_left, &opt, iter_nums, -3, 3,
-                          -3, 3, 0, 3, -0.01, 0.01, -0.01, 0.01, -0.01, 0.01);
+      threads[0] = thread(&Optimizer::Calibrate_left, &opt, iter_nums, -15, 15,
+                          -15, 15, -15, 15, -0.05, 0.05, -0.05, 0.05, -0.05, 0.05);
+      threads[1] = thread(&Optimizer::Calibrate_left, &opt, iter_nums, -15, 0,
+                          -15, 15, -15, 15, -0.05, 0.05, -0.05, 0.05, -0.05, 0.05);
+      threads[2] = thread(&Optimizer::Calibrate_left, &opt, iter_nums, 0, 15, -15,
+                          15, -15, 15, -0.05, 0.05, -0.05, 0.05, -0.05, 0.05);
+      threads[3] = thread(&Optimizer::Calibrate_left, &opt, iter_nums, -15, 15,
+                          -15, 0, -15, 15, -0.05, 0.05, -0.05, 0.05, -0.05, 0.05);
+      threads[4] = thread(&Optimizer::Calibrate_left, &opt, iter_nums, -15, 15, 0,
+                          15, -15, 15, -0.05, 0.05, -0.05, 0.05, -0.05, 0.05);
+      threads[5] = thread(&Optimizer::Calibrate_left, &opt, iter_nums, -15, 15,
+                          -15, 15, -15, 0, -0.05, 0.05, -0.05, 0.05, -0.05, 0.05);
+      threads[6] = thread(&Optimizer::Calibrate_left, &opt, iter_nums, -15, 15,
+                          -15, 15, 0, 15, -0.05, 0.05, -0.05, 0.05, -0.05, 0.05);
     } else if (cameraType == "behind") {
       int iter_nums = 100000;
-      threads[0] = thread(&Optimizer::Calibrate_behind, &opt, iter_nums, -3, 3,
-                          -3, 3, -3, 3, -0.01, 0.01, -0.01, 0.01, -0.01, 0.01);
-      threads[1] = thread(&Optimizer::Calibrate_behind, &opt, iter_nums, -3, 0,
-                          -3, 3, -3, 3, -0.01, 0.01, -0.01, 0.01, -0.01, 0.01);
-      threads[2] = thread(&Optimizer::Calibrate_behind, &opt, iter_nums, 0, 3,
-                          -3, 3, -3, 3, -0.01, 0.01, -0.01, 0.01, -0.01, 0.01);
-      threads[3] = thread(&Optimizer::Calibrate_behind, &opt, iter_nums, -3, 3,
-                          -3, 0, -3, 3, -0.01, 0.01, -0.01, 0.01, -0.01, 0.01);
-      threads[4] = thread(&Optimizer::Calibrate_behind, &opt, iter_nums, -3, 3,
-                          0, 3, -3, 3, -0.01, 0.01, -0.01, 0.01, -0.01, 0.01);
-      threads[5] = thread(&Optimizer::Calibrate_behind, &opt, iter_nums, -3, 3,
-                          -3, 3, -3, 0, -0.01, 0.01, -0.01, 0.01, -0.01, 0.01);
-      threads[6] = thread(&Optimizer::Calibrate_behind, &opt, iter_nums, -3, 3,
-                          -3, 3, 0, 3, -0.01, 0.01, -0.01, 0.01, -0.01, 0.01);
+      threads[0] = thread(&Optimizer::Calibrate_behind, &opt, iter_nums, -15, 15,
+                          -15, 15, -15, 15, -0.05, 0.05, -0.05, 0.05, -0.05, 0.05);
+      threads[1] = thread(&Optimizer::Calibrate_behind, &opt, iter_nums, -15, 0,
+                          -15, 15, -15, 15, -0.05, 0.05, -0.05, 0.05, -0.05, 0.05);
+      threads[2] = thread(&Optimizer::Calibrate_behind, &opt, iter_nums, 0, 15,
+                          -15, 15, -15, 15, -0.05, 0.05, -0.05, 0.05, -0.05, 0.05);
+      threads[3] = thread(&Optimizer::Calibrate_behind, &opt, iter_nums, -15, 15,
+                          -15, 0, -15, 15, -0.05, 0.05, -0.05, 0.05, -0.05, 0.05);
+      threads[4] = thread(&Optimizer::Calibrate_behind, &opt, iter_nums, -15, 15,
+                          0, 15, -15, 15, -0.05, 0.05, -0.05, 0.05, -0.05, 0.05);
+      threads[5] = thread(&Optimizer::Calibrate_behind, &opt, iter_nums, -15, 15,
+                          -15, 15, -15, 0, -0.05, 0.05, -0.05, 0.05, -0.05, 0.05);
+      threads[6] = thread(&Optimizer::Calibrate_behind, &opt, iter_nums, -15, 15,
+                          -15, 15, 0, 15, -0.05, 0.05, -0.05, 0.05, -0.05, 0.05);
     }
     for (int i = 0; i < thread_num; i++) {
       threads[i].join();
@@ -295,15 +296,109 @@ double CameraOptimization(Optimizer &opt, string cameraType) {
   return during_calib_ + during_calib__ + during_calib___;
 }
 
-int main() {
+int main(int argc, char **argv) {
   // camera_model:0-fisheye;1-Ocam;2-pinhole
   int camera_model = 0;
 
+  // Default image paths
+  string imgf_path = "./imgs/Front.jpg";
+  string imgl_path = "./imgs/Left.jpg";
+  string imgb_path = "./imgs/Back.jpg";
+  string imgr_path = "./imgs/Right.jpg";
+
+  // Ocam calibration files
+  string ocam_front_file, ocam_left_file, ocam_behind_file, ocam_right_file;
+  
+  // Extrinsics file
+  string extrinsics_file;
+  
+  // Output directory
+  string output_dir = "./";
+
+  // Parse command line arguments
+  if (argc > 1) {
+    for (int i = 1; i < argc; i++) {
+      string arg = argv[i];
+      if (arg == "--camera-model" && i + 1 < argc) {
+        camera_model = atoi(argv[++i]);
+      } else if (arg == "--front" && i + 1 < argc) {
+        imgf_path = argv[++i];
+      } else if (arg == "--left" && i + 1 < argc) {
+        imgl_path = argv[++i];
+      } else if (arg == "--behind" && i + 1 < argc) {
+        imgb_path = argv[++i];
+      } else if (arg == "--right" && i + 1 < argc) {
+        imgr_path = argv[++i];
+      } else if (arg == "--ocam-front" && i + 1 < argc) {
+        ocam_front_file = argv[++i];
+      } else if (arg == "--ocam-left" && i + 1 < argc) {
+        ocam_left_file = argv[++i];
+      } else if (arg == "--ocam-behind" && i + 1 < argc) {
+        ocam_behind_file = argv[++i];
+      } else if (arg == "--ocam-right" && i + 1 < argc) {
+        ocam_right_file = argv[++i];
+      } else if (arg == "--extrinsics" && i + 1 < argc) {
+        extrinsics_file = argv[++i];
+      } else if (arg == "--output-dir" && i + 1 < argc) {
+        output_dir = argv[++i];
+        // Ensure directory ends with /
+        if (output_dir.back() != '/') {
+          output_dir += '/';
+        }
+      } else if (arg == "--help" || arg == "-h") {
+        cout << "Usage: " << argv[0] << " [options]" << endl;
+        cout << "Options:" << endl;
+        cout << "  --camera-model <0|1|2>  Camera model (0=fisheye, 1=Ocam, 2=pinhole), default: 0" << endl;
+        cout << "  --front <path>          Front image path" << endl;
+        cout << "  --left <path>           Left image path" << endl;
+        cout << "  --behind <path>         Behind image path" << endl;
+        cout << "  --right <path>          Right image path" << endl;
+        cout << "  --ocam-front <path>     Ocam front calibration file (JSON)" << endl;
+        cout << "  --ocam-left <path>      Ocam left calibration file (JSON)" << endl;
+        cout << "  --ocam-behind <path>    Ocam behind calibration file (JSON)" << endl;
+        cout << "  --ocam-right <path>     Ocam right calibration file (JSON)" << endl;
+        cout << "  --extrinsics <path>     Initial extrinsics file (JSON)" << endl;
+        cout << "  --output-dir <path>     Output directory for results" << endl;
+        cout << "  --help, -h              Show this help message" << endl;
+        return 0;
+      }
+    }
+  }
+
   // read frames
-  Mat imgf = cv::imread("./imgs/Front.jpg");
-  Mat imgl = cv::imread("./imgs/Left.jpg");
-  Mat imgb = cv::imread("./imgs/Back.jpg");
-  Mat imgr = cv::imread("./imgs/Right.jpg");
+  Mat imgf = cv::imread(imgf_path);
+  Mat imgl = cv::imread(imgl_path);
+  Mat imgb = cv::imread(imgb_path);
+  Mat imgr = cv::imread(imgr_path);
+
+  // Rotate images based on camera mounting orientation
+  // Typical setup: cameras are mounted with different rotations
+  // We need to rotate them so that in the image:
+  // - +Y (image down) corresponds to the direction away from the vehicle
+  // This is necessary for correct BEV projection
+  if (camera_model == 1) {
+    // Ocam cameras - rotate to standard orientation
+    // Front camera: usually needs 180 degree rotation (lens forward, sensor backward)
+    rotate(imgf, imgf, ROTATE_180);
+
+    // Left camera: usually needs 90 degree rotation (lens left, sensor up)
+    rotate(imgl, imgl, ROTATE_90_COUNTERCLOCKWISE);
+
+    // Right camera: usually needs 270 degree rotation (lens right, sensor up)
+    rotate(imgr, imgr, ROTATE_90_CLOCKWISE);
+
+    // Back camera: usually no rotation or 180 depending on mounting
+    rotate(imgb, imgb, ROTATE_180);
+  }
+
+  if (imgf.empty() || imgl.empty() || imgb.empty() || imgr.empty()) {
+    cerr << "Error: Could not read one or more input images!" << endl;
+    cerr << "Front: " << imgf_path << endl;
+    cerr << "Left: " << imgl_path << endl;
+    cerr << "Behind: " << imgb_path << endl;
+    cerr << "Right: " << imgr_path << endl;
+    return 1;
+  }
 
   // bev rows、cols
   int bev_rows = 1000, bev_cols = 1000;
@@ -311,13 +406,37 @@ int main() {
   // if add coarse search(1st search)
   int coarse_search_flag = 1;
 
-  // which data_set(common or fisheye camera)
-  string data_set = "fisheye";
+  // which data_set(common, fisheye, or ocam camera)
+  string data_set = (camera_model == 1) ? "ocam" : "fisheye";
   string fixed = "front";
 
   // initilize the optimizer
   Optimizer opt(&imgf, &imgl, &imgb, &imgr, camera_model, bev_rows, bev_cols,
                 fixed, coarse_search_flag, data_set);
+
+  // Load Ocam parameters if provided
+  if (camera_model == 1) {
+    if (!ocam_front_file.empty() && !ocam_left_file.empty() &&
+        !ocam_behind_file.empty() && !ocam_right_file.empty()) {
+      cout << "Loading Ocam calibration files..." << endl;
+      opt.loadOcamParams(ocam_front_file, ocam_left_file,
+                         ocam_behind_file, ocam_right_file);
+    } else {
+      cerr << "Warning: Ocam model selected but not all calibration files provided!" << endl;
+      cerr << "Using default parameters..." << endl;
+    }
+  }
+  
+  // Load extrinsics if provided
+  if (!extrinsics_file.empty()) {
+    opt.loadExtrinsicsFromJson(extrinsics_file);
+  } else {
+    cout << "\nWarning: No extrinsics file provided!" << endl;
+    cout << "Using hard-coded initial extrinsics..." << endl;
+  }
+  
+  // Set output prefix
+  opt.prefix = output_dir;
 
   // bev images before optimization
   Mat GF = opt.project_on_ground(imgf, opt.extrinsic_front, opt.intrinsic_front,
@@ -349,6 +468,17 @@ int main() {
   ext1.findcontours();
   opt.fl_pixels_texture = ext1.extrac_textures_and_save(
       opt.prefix + "/texture_fl.png", opt.prefix + "/fl.csv", "fl", opt.sizef);
+  
+  // Check if texture extraction succeeded
+  if (opt.fl_pixels_texture.empty()) {
+    cerr << "Error: No texture points extracted for front-left calibration!" << endl;
+    cerr << "Possible causes:" << endl;
+    cerr << "  1. Input images are too dark or lack features" << endl;
+    cerr << "  2. Initial extrinsics are too far off" << endl;
+    cerr << "  3. BEV projection is incorrect" << endl;
+    return 1;
+  }
+  
   if (ext1.exposure_flag)
     opt.ncoef_fl = ext1.ncoef;
   else
@@ -456,5 +586,29 @@ int main() {
   cout << "total calibration time:" << during1 + during2 + during3 << "s"
        << endl;
 
-  opt.SaveOptResult("./after_all_calib.png");
+  opt.SaveOptResult(output_dir + "after_all_calib.png");
+  
+  // Save final results
+  cout << "\n==========================================" << endl;
+  cout << "Saving calibration results..." << endl;
+  cout << "==========================================" << endl;
+  
+  string output_file = output_dir + "calibration_results.json5";
+  
+  // Save optimized extrinsics
+  opt.saveExtrinsicsToJson(output_file, "park_front", opt.extrinsic_front_opt);
+  opt.saveExtrinsicsToJson(output_file, "park_left", opt.extrinsic_left_opt);
+  opt.saveExtrinsicsToJson(output_file, "park_back", opt.extrinsic_behind_opt);
+  opt.saveExtrinsicsToJson(output_file, "park_right", opt.extrinsic_right_opt);
+  
+  cout << "\nAll results saved to: " << output_file << endl;
+  
+  // Copy before calibration image to output directory
+  string before_src = output_dir + "before_all_calib.png";
+  if (access(before_src.c_str(), F_OK) != -1) {
+    // File exists, copy it
+    string before_dst = output_dir + "before_all_calib.png";
+    // Actually it's already in the right place
+    cout << "Before calibration image: " << before_src << endl;
+  }
 }

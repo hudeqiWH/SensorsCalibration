@@ -65,6 +65,32 @@ public:
   vector<double> distortion_params_behind;
   vector<double> distortion_params_right;
 
+  // Ocam model parameters
+  struct OcamParams {
+    double cx, cy;
+    double c, d, e;
+    vector<double> cam2world_poly;
+    vector<double> world2cam_poly;
+    Eigen::Matrix2d A;
+    Eigen::Vector2d B;
+    int width, height;
+    
+    // Pre-computed polynomial coefficients for efficient evaluation
+    // Stored in descending order for Horner's method
+    Eigen::VectorXd world2cam_coeffs;
+  };
+
+  OcamParams ocam_front;
+  OcamParams ocam_left;
+  OcamParams ocam_behind;
+  OcamParams ocam_right;
+
+  // Extrinsic parameters storage (for saving results)
+  Eigen::Matrix4d extrinsic_front_initial;  // Initial extrinsics
+  Eigen::Matrix4d extrinsic_left_initial;
+  Eigen::Matrix4d extrinsic_behind_initial;
+  Eigen::Matrix4d extrinsic_right_initial;
+
   // SVS cameras height
   double hf, hl, hb, hr;
 
@@ -143,6 +169,16 @@ public:
   void initializeKG();
   void initializeHeight();
   void initializetailsize();
+  void loadOcamParams(const string &calib_file_front, const string &calib_file_left,
+                      const string &calib_file_behind, const string &calib_file_right);
+  OcamParams loadSingleOcamParam(const string &calib_file);
+  
+  // Extrinsics loading and saving
+  void loadExtrinsicsFromJson(const string &filename);
+  void saveExtrinsicsToJson(const string &filename, const string &camera_name,
+                            const Eigen::Matrix4d &extrinsic);
+  Eigen::Matrix3d rodriguesToRotationMatrix(const vector<double> &rvec);
+  void rodriguesToRotationMatrix(const double rvec[3], double R[9]);
   Mat tail(Mat img, string index);
   void Calibrate_left(int search_count, double roll_ep0, double roll_ep1,
                       double pitch_ep0, double pitch_ep1, double yaw_ep0,
@@ -189,6 +225,7 @@ public:
   void SaveOptResult(const string img_name);
   void show(string idx, string filename);
   cv::Mat eigen2mat(Eigen::MatrixXd A);
+  Eigen::MatrixXd cvMat2Eigen(cv::Mat A);
   Mat gray_gamma(Mat img);
   void world2cam(double point2D[2], double point3D[3], Eigen::Matrix3d K,
                  vector<double> D);
@@ -212,8 +249,11 @@ public:
   Mat project_on_ground(cv::Mat img, Eigen::Matrix4d T_CG, Eigen::Matrix3d K_C,
                         vector<double> D_C, Eigen::Matrix3d K_G, int rows,
                         int cols, float height);
+  Mat project_on_ground(cv::Mat img, Eigen::Matrix4d T_CG, Eigen::Matrix3d K_C,
+                        vector<double> D_C, Eigen::Matrix3d K_G, int rows,
+                        int cols, float height, const string &camera_idx);
   double back_camera_and_compute_loss(Mat img1, Mat img2, Eigen::Matrix4d T,
-                                      string idx);
+                                      string idx, const string &camera_idx);
   double getPixelValue(Mat *image, float x, float y);
 };
 

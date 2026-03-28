@@ -1,6 +1,5 @@
 #include <Eigen/Core>
 #include <Eigen/Dense>
-#include <glog/logging.h>
 #include <iostream>
 #include <math.h>
 #include <opencv2/core/eigen.hpp>

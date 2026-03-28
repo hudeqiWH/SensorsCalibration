@@ -60,21 +60,27 @@ void extractor::findcontours() {
   dilate(bin_of_imgs, dilate_img, dilate_kernel);
   Mat erode_kernel = getStructuringElement(0, Size(5, 5));
   erode(dilate_img, erode_img, erode_kernel, Point(-1, -1), 2);
-  cv::findContours(erode_img, contours, cv::noArray(), CV_RETR_EXTERNAL,
-                   CV_CHAIN_APPROX_NONE);
+  cv::findContours(erode_img, contours, cv::noArray(), cv::RETR_EXTERNAL,
+                   cv::CHAIN_APPROX_NONE);
 
   int maxsize = 0;
   int index = 0;
-  for (int i = 0; i < contours.size(); i++) {
+  for (size_t i = 0; i < contours.size(); i++) {
     if (contours[i].size() > maxsize) {
       maxsize = contours[i].size();
       index = i;
     }
   }
 
+  // Check if contours is empty to avoid segmentation fault
+  if (contours.empty()) {
+    cerr << "Warning: No contours found in texture extraction!" << endl;
+    this->contours = vector<vector<Point>>();  // Set empty contours
+    return;
+  }
+
   vector<vector<Point>> contours_after_filter;
   contours_after_filter.push_back(contours[index]);
-  ;
 
   std::vector<std::vector<cv::Point>> contours_pixels;
   contours_pixels = fillContour(contours_after_filter);
@@ -142,6 +148,12 @@ extractor::fillContour(const std::vector<std::vector<cv::Point>> &_contours) {
 vector<cv::Point> extractor::extrac_textures_and_save(string pic_filename,
                                                       string csv_filename,
                                                       string idx, double size) {
+  // Check if contours is empty before accessing contours[0]
+  if (contours.empty()) {
+    cerr << "Warning: No contours found in texture extraction for idx=" << idx << endl;
+    return vector<Point>();  // Return empty vector
+  }
+
   int down_sample = 500;
   Mat gray1, gray2;
   cvtColor(img1_bev, gray1, COLOR_BGR2GRAY);

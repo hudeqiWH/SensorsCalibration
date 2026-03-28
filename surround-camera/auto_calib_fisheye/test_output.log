@@ -1,0 +1,149 @@
+extrinsic_front:
+  0.999277 0.00038239 -0.0380144   0.675437
+-0.0230748  -0.788582  -0.614496    25.0897
+-0.0302125   0.614929  -0.788004    3.17779
+         0          0          0          1
+eular:
+-1.32281
+ 1.73131
+ 142.033
+extrinsic_left:
+-0.0620123   0.997881 -0.0197145    1.36633
+  0.813758  0.0391137  -0.579886    16.1071
+ -0.577886 -0.0520029  -0.814459    10.4118
+         0          0          0          1
+eular:
+ 94.3578
+  35.302
+-176.347
+extrinsic_right:
+ 0.0533874  -0.997356 -0.0493058  -0.158577
+ -0.608266 0.00667817  -0.793705    17.6112
+  0.791936  0.0723649  -0.606301    6.08248
+         0          0          0          1
+eular:
+ -84.984
+-52.3668
+ 173.194
+extrinsic_behind:
+ -0.997111 -0.0134861 -0.0747459    1.09433
+ 0.0300643   0.833652  -0.551471     24.619
+ 0.0697493  -0.552125  -0.830839    6.60612
+         0          0          0          1
+eular:
+ 178.273
+-3.99959
+-146.394
+Loading Ocam calibration files...
+Loading Ocam calibration parameters...
+Front camera: 1920x1536
+Left camera: 1920x1536
+Behind camera: 1920x1536
+Right camera: 1920x1536
+*********************************start right*************************************
+**************************************1st****************************************
+time:5.13043
+[ WARN:0@6.035] global ./modules/imgcodecs/src/loadsave.cpp (773) imwrite_ imwrite_('/after_right_calib1.png'): can't open file for writing: permission denied
+luminorsity loss before pre opt:3.36061e+06
+luminorsity loss after pre opt:3.36061e+06
+extrinsic after pre opt:
+ 0.0679022  -0.997249 -0.0297299  -0.168057
+ -0.592811 -0.0163604  -0.805175    17.6192
+  0.802474  0.0722974  -0.592291    6.08926
+         0          0          0          1
+best search parameters:
+1.050000 1.110000 -0.780000 0.000000 0.010000 -0.010000 
+**************************************2nd****************************************
+time:1.211376
+[ WARN:0@7.248] global ./modules/imgcodecs/src/loadsave.cpp (773) imwrite_ imwrite_('/after_right_calib2.png'): can't open file for writing: permission denied
+luminorsity loss after opt:3360609.879193
+extrinsic after opt:
+ 0.067902 -0.997249 -0.029730 -0.168057
+-0.592811 -0.016360 -0.805175 17.619175
+ 0.802474  0.072297 -0.592291  6.089263
+ 0.000000  0.000000  0.000000  1.000000
+best search parameters:
+1.050000 1.110000 -0.780000 0.000000 0.010000 -0.010000 
+**************************************3rd****************************************
+time:0.706431
+[ WARN:0@7.953] global ./modules/imgcodecs/src/loadsave.cpp (773) imwrite_ imwrite_('/after_right_calib3.png'): can't open file for writing: permission denied
+luminorsity loss after opt:3360609.874189
+extrinsic after opt:
+ 0.067910 -0.997248 -0.029759 -0.169577
+-0.592857 -0.016345 -0.805142 17.621045
+ 0.802439  0.072320 -0.592335  6.089620
+ 0.000000  0.000000  0.000000  1.000000
+best search parameters:
+1.048540 1.106690 -0.780540 -0.000925 0.011511 -0.011672 
+right calibration time: 7.048239s
+*********************************start left**************************************
+**************************************1st****************************************
+time:4.575745
+luminorsity loss before pre opt:10181032.671988
+luminorsity loss after pre opt:10178931.623227
+extrinsic after pre opt:
+-0.008870  0.997355 -0.072135  1.365512
+ 0.842891 -0.031355 -0.537169 16.109403
+-0.538011 -0.065567 -0.840384 10.397878
+ 0.000000  0.000000  0.000000  1.000000
+best search parameters:
+2.980000 2.890000 2.990000 0.010000 0.000000 0.010000 
+**************************************2nd****************************************
+time:1.199499
+luminorsity loss after opt:10134718.404224
+extrinsic after opt:
+ 0.981393 -0.145070  0.125787  1.307294
+-0.143946 -0.989421 -0.018032 16.102054
+ 0.127072 -0.000410 -0.991893 10.371597
+ 0.000000  0.000000  0.000000  1.000000
+best search parameters:
+25.672484 22.635460 102.354750 0.011652 -0.039182 0.032127 
+**************************************3rd****************************************
+time:0.651900
+luminorsity loss after opt:10134718.008850
+extrinsic after opt:
+ 0.981378 -0.145070  0.125901  1.306503
+-0.143943 -0.989421 -0.018052 16.102902
+ 0.127188 -0.000407 -0.991879 10.369321
+ 0.000000  0.000000  0.000000  1.000000
+best search parameters:
+25.672276 22.642134 102.354702 0.010465 -0.039905 0.034270 
+left calibration time: 6.427144s
+*********************************start behind***********************************
+**************************************1st****************************************
+time:9.621342
+[ WARN:0@24.037] global ./modules/imgcodecs/src/loadsave.cpp (773) imwrite_ imwrite_('/after_behind_calib1.png'): can't open file for writing: permission denied
+luminorsity loss before pre opt:1957975.710215
+luminorsity loss after pre opt:1956848.786875
+extrinsic after pre opt:
+-0.997591 -0.064254 -0.026153  1.103419
+-0.042113  0.860491 -0.507723 24.621536
+ 0.055128 -0.505398 -0.861123  6.591589
+ 0.000000  0.000000  0.000000  1.000000
+best search parameters:
+-2.860000 -2.980000 -2.990000 -0.010000 0.010000 0.010000 
+**************************************2nd****************************************
+time:1.914496
+[ WARN:0@25.949] global ./modules/imgcodecs/src/loadsave.cpp (773) imwrite_ imwrite_('/after_behind_calib2.png'): can't open file for writing: permission denied
+luminorsity loss after opt:1921331.052746
+extrinsic after opt:
+-0.283450 -0.904603  0.318354  2.744966
+-0.914350  0.154830 -0.374154 24.752987
+ 0.289170 -0.397141 -0.871011  7.205187
+ 0.000000  0.000000  0.000000  1.000000
+best search parameters:
+4.808888 -13.943683 -73.457296 -0.481158 -1.726480 -0.129673 
+**************************************3rd****************************************
+time:1.021851
+[ WARN:0@26.971] global ./modules/imgcodecs/src/loadsave.cpp (773) imwrite_ imwrite_('/after_behind_calib3.png'): can't open file for writing: permission denied
+luminorsity loss after opt:1921025.109284
+extrinsic after opt:
+-0.289381 -0.904280  0.313905  3.285670
+-0.911049  0.159581 -0.380162 24.844623
+ 0.293679 -0.395995 -0.870023  7.438752
+ 0.000000  0.000000  0.000000  1.000000
+best search parameters:
+4.655038 -13.539983 -73.222690 -0.651745 -2.293706 -0.196577 
+behind calibration time: 12.557690s
+************************online calibration finished!!!**************************
+total calibration time:26.033073s
