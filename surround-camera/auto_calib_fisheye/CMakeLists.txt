@@ -40,11 +40,3 @@ target_link_libraries(run_AVM_Calibration ${PROJECT_NAME} ${JSONCPP_LIBRARIES})
 add_executable(test_bev_simple test_bev_simple.cpp)
 target_link_libraries(test_bev_simple ${PROJECT_NAME} ${JSONCPP_LIBRARIES})
 
-# BEV无tail测试程序
-add_executable(test_bev_no_tail test_bev_no_tail.cpp)
-target_link_libraries(test_bev_no_tail ${PROJECT_NAME} ${JSONCPP_LIBRARIES})
-
-# BEV单位矩阵测试程序
-add_executable(test_bev_identity test_bev_identity.cpp)
-target_link_libraries(test_bev_identity ${PROJECT_NAME} ${JSONCPP_LIBRARIES})
-

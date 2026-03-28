@@ -24,9 +24,12 @@ echo "Build successful! Running BEV test..."
 echo "=========================================="
 echo ""
 
+# Build test executable
+make test_bev_simple
+
 # Run the test
 cd ..
-./build/test_bev_simple
+./bin/test_bev_simple
 
 echo ""
 echo "=========================================="
