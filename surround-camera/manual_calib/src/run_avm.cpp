@@ -12,6 +12,7 @@
 #include <unistd.h>
 
 #include <Eigen/Core>
+#include <Eigen/Geometry>
 #include <iostream>
 #include <string>
 
