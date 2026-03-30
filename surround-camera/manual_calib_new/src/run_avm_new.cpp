@@ -384,8 +384,8 @@ Mat project_on_ground(Mat img, const CameraConfig &cam, const string &camera_idx
 
 // Tail function for blending
 Mat tail(Mat img, const string &index) {
-    int size = 300;  // Default tail size
-    
+    int size = 600;  // Default tail size
+
     if (index == "f" || index == "front") {
         Rect m_select = Rect(0, 0, img.cols, size);
         Mat cropped = img(m_select);
@@ -419,6 +419,25 @@ Mat tail(Mat img, const string &index) {
 }
 
 // Generate surround view from 4 BEV images
+/**
+ * @brief 生成全景环视（Surround View）图像
+ * 
+ * 将四个方向的BEV图像（前、后、左、右）拼接成一张全景图像，
+ * 在重叠区域进行图像融合，并在中心区域创建黑色遮罩。
+ * 
+ * @param img_GF 前方（Front）BEV投影图像
+ * @param img_GL 左侧（Left）BEV投影图像
+ * @param img_GB 后方（Back）BEV投影图像
+ * @param img_GR 右侧（Right）BEV投影图像
+ * 
+ * @return 拼接后的全景环视图像
+ * 
+ * @note 融合策略：
+ *       - 四角区域：相邻方向图像按0.5权重混合
+ *       - 边缘区域：单一方向图像
+ *       - 中心区域：黑色遮罩（blend_start到blend_end范围）
+ * @note blend_start和blend_end参数定义了中心黑色区域的大小
+ */
 Mat generate_surround_view(Mat img_GF, Mat img_GL, Mat img_GB, Mat img_GR) {
     Mat img_G(bev_rows, bev_cols, CV_8UC3);
     
@@ -518,7 +537,21 @@ void CalibrationScaleChange(int frame) {
     cout << "=>Calibration scale update done!" << endl;
 }
 
-// Save calibration result
+// Convert rotation matrix to Rodrigues vector
+void rotationMatrixToRodrigues(const Eigen::Matrix3d &R, Eigen::Vector3d &rvec) {
+    double theta = acos((R.trace() - 1.0) / 2.0);
+    
+    if (theta < 1e-8) {
+        rvec = Eigen::Vector3d::Zero();
+    } else {
+        rvec << R(2, 1) - R(1, 2),
+                R(0, 2) - R(2, 0),
+                R(1, 0) - R(0, 1);
+        rvec *= theta / (2.0 * sin(theta));
+    }
+}
+
+// Save calibration result - output in input format (T_cam_to_body)
 void saveResult(const int &frame_id) {
     std::string file_name = "calibration_" + std::to_string(frame_id) + ".txt";
     std::ofstream fCalib(file_name);
@@ -529,7 +562,17 @@ void saveResult(const int &frame_id) {
     
     const CameraConfig &cam = cameras[frame_id];
     
-    fCalib << "Extrinsic:" << endl;
+    // Convert T_body_to_cam to T_cam_to_body (inverse)
+    Eigen::Matrix4d T_cam_to_body = cam.extrinsic.inverse();
+    Eigen::Matrix3d R_cam_to_body = T_cam_to_body.block<3, 3>(0, 0);
+    Eigen::Vector3d t_cam_in_body = T_cam_to_body.block<3, 1>(0, 3);
+    
+    // Convert rotation matrix to Rodrigues vector
+    Eigen::Vector3d rvec;
+    rotationMatrixToRodrigues(R_cam_to_body, rvec);
+    
+    // Text format output
+    fCalib << "Extrinsic (T_body_to_cam):" << endl;
     fCalib << "R:\n"
            << cam.extrinsic(0, 0) << " " << cam.extrinsic(0, 1) << " " << cam.extrinsic(0, 2) << "\n"
            << cam.extrinsic(1, 0) << " " << cam.extrinsic(1, 1) << " " << cam.extrinsic(1, 2) << "\n"
@@ -537,24 +580,57 @@ void saveResult(const int &frame_id) {
     fCalib << "t: " << cam.extrinsic(0, 3) << " " << cam.extrinsic(1, 3) << " " << cam.extrinsic(2, 3) << endl;
     fCalib << "height: " << cam.height << endl;
     
-    fCalib << "\n************* JSON format *************" << endl;
-    fCalib << "\"" << json_names[frame_id] << "\":" << endl;
-    fCalib << "  {\"rotation\": [";
-    
-    // For now, just output the matrix format
-    fCalib << "0, 0, 0], \"translation\": [" << cam.extrinsic(0,3) << ", " << cam.extrinsic(1,3) << ", " << cam.extrinsic(2,3) << "]}" << endl;
-    
-    // Full 4x4 matrix
-    fCalib << "\nFull 4x4 matrix:" << endl;
-    for (int i = 0; i < 4; i++) {
-        fCalib << "[" << cam.extrinsic(i, 0) << "," << cam.extrinsic(i, 1) << ","
-               << cam.extrinsic(i, 2) << "," << cam.extrinsic(i, 3) << "]";
-        if (i < 3) fCalib << ",";
-        fCalib << endl;
-    }
+    // JSON format - same as input format (T_cam_to_body)
+    fCalib << "\n************* Output JSON format (T_cam_to_body) *************" << endl;
+    fCalib << "\"" << json_names[frame_id] << "\": {" << endl;
+    fCalib << "    \"rotation\": [" << rvec(0) << ", " << rvec(1) << ", " << rvec(2) << "]," << endl;
+    fCalib << "    \"translation\": [" << t_cam_in_body(0) << ", " << t_cam_in_body(1) << ", " << t_cam_in_body(2) << "]" << endl;
+    fCalib << "}" << endl;
     
     fCalib.close();
     cout << "Saved calibration to " << file_name << endl;
+    cout << "  Rotation (Rodrigues): [" << rvec.transpose() << "]" << endl;
+    cout << "  Translation (cam in body): [" << t_cam_in_body.transpose() << "]" << endl;
+}
+
+// Save all extrinsics to a single JSON file (same format as input)
+void saveAllExtrinsics(const string &filename) {
+    std::ofstream f(filename);
+    if (!f.is_open()) {
+        cerr << "Failed to open " << filename << " for writing" << endl;
+        return;
+    }
+    
+    f << "{" << endl;
+    f << "    \"extrinsic_param\": {" << endl;
+    
+    for (int i = 0; i < 4; i++) {
+        const CameraConfig &cam = cameras[i];
+        
+        // Convert T_body_to_cam to T_cam_to_body (inverse)
+        Eigen::Matrix4d T_cam_to_body = cam.extrinsic.inverse();
+        Eigen::Matrix3d R_cam_to_body = T_cam_to_body.block<3, 3>(0, 0);
+        Eigen::Vector3d t_cam_in_body = T_cam_to_body.block<3, 1>(0, 3);
+        
+        // Convert rotation matrix to Rodrigues vector
+        Eigen::Vector3d rvec;
+        rotationMatrixToRodrigues(R_cam_to_body, rvec);
+        
+        f << "        \"" << json_names[i] << "\": {" << endl;
+        f << "            \"rotation\": [" << rvec(0) << ", " << rvec(1) << ", " << rvec(2) << "]," << endl;
+        f << "            \"translation\": [" << t_cam_in_body(0) << ", " << t_cam_in_body(1) << ", " << t_cam_in_body(2) << "]" << endl;
+        f << "        }";
+        if (i < 3) f << ",";
+        f << endl;
+    }
+    
+    f << "    }" << endl;
+    f << "}" << endl;
+    f.close();
+    
+    cout << "\n==========================================" << endl;
+    cout << "Saved all extrinsics to: " << filename << endl;
+    cout << "==========================================" << endl;
 }
 
 // Manual calibration via keyboard
@@ -773,6 +849,7 @@ int main(int argc, char **argv) {
                     saveResult(i);
                 }
                 imwrite("stitching.png", img_surround);
+                saveAllExtrinsics("camera_extrinsics_calibrated.json");
                 cout << "Saved all calibrations" << endl;
             } else {
                 saveResult(cali_frame);
