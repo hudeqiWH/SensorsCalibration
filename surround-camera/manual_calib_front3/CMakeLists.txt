@@ -92,3 +92,14 @@ target_link_libraries(run_front3_calib_final
     ${Boost_SYSTEM_LIBRARY}
     /mnt/d327cf14-2b9b-4977-955d-e19c9242ea1a/deqi/r_calib/third_party/jsoncpp/build/lib/libjsoncpp.a
 )
+
+# Executable - Fixed version (corrects flip issues)
+add_executable(run_front3_calib_fixed 
+    src/run_front3_calib_fixed.cpp
+)
+target_link_libraries(run_front3_calib_fixed 
+    ${OpenCV_LIBS} 
+    ${Pangolin_LIBRARIES} 
+    ${Boost_SYSTEM_LIBRARY}
+    /mnt/d327cf14-2b9b-4977-955d-e19c9242ea1a/deqi/r_calib/third_party/jsoncpp/build/lib/libjsoncpp.a
+)

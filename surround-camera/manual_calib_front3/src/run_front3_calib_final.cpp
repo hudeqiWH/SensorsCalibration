@@ -204,7 +204,7 @@ void projectCameraToWall(FrontCameraConfig &cam) {
         for (int u = 0; u < output_width; u++) {
             // Convert output pixel to wall coordinates
             // wall_x: left(-) to right(+), maps to output u: 0(left) to width(right)
-            // wall_y: down(-) to up(+), maps to output v: 0(top) to height(bottom)
+            // wall_y: up(+) to down(-), maps to output v: 0(top) to height(bottom)
             double wall_x = wall_x_min + u * meter_per_pixel + meter_per_pixel / 2;
             double wall_y = wall_y_max - v * meter_per_pixel - meter_per_pixel / 2;
             
@@ -797,13 +797,13 @@ int main(int argc, char **argv) {
             }
         }
         
-        // Update display - use RenderToViewport (no flip)
+        // Update display - use FlipY to correct OpenGL coordinate system
         imageArray = display_image.data;
         imageTexture.Upload(imageArray, GL_BGR, GL_UNSIGNED_BYTE);
         
         project_image.Activate();
         glColor3f(1.0, 1.0, 1.0);
-        imageTexture.RenderToViewport();
+        imageTexture.RenderToViewportFlipY();
         
         pangolin::FinishFrame();
         glFinish();
