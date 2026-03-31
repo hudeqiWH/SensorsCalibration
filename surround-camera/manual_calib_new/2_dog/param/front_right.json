@@ -1,0 +1,32 @@
+{
+  "name": "front_right",
+    "intrinsic_param": {
+        "camera_height": 2168,
+        "camera_matrix": [
+            [
+                1858.4908447265625,
+                0.0,
+                1914.54833984375
+            ],
+            [
+                0.0,
+                1858.4908447265625,
+                1086.64306640625
+            ],
+            [
+                0.0,
+                0.0,
+                1.0
+            ]
+        ],
+        "camera_model": 4,
+        "camera_width": 3848,
+        "distortion_coeffcients": [
+            -0.02515130676329136,
+            0.007995144464075565,
+            -0.0022894442081451416,
+            -0.00025894097052514553
+        ],
+        "distortion_model": "opencv-fisheye elements"
+    }
+}
