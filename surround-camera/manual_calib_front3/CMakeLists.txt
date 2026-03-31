@@ -103,3 +103,33 @@ target_link_libraries(run_front3_calib_fixed
     ${Boost_SYSTEM_LIBRARY}
     /mnt/d327cf14-2b9b-4977-955d-e19c9242ea1a/deqi/r_calib/third_party/jsoncpp/build/lib/libjsoncpp.a
 )
+
+# Executable - Debug version (prints detailed projection info)
+add_executable(run_front3_calib_debug 
+    src/run_front3_calib_debug.cpp
+)
+target_link_libraries(run_front3_calib_debug 
+    ${OpenCV_LIBS} 
+    ${Pangolin_LIBRARIES} 
+    ${Boost_SYSTEM_LIBRARY}
+    /mnt/d327cf14-2b9b-4977-955d-e19c9242ea1a/deqi/r_calib/third_party/jsoncpp/build/lib/libjsoncpp.a
+)
+
+# Executable - Ocam projection verification (compare with CPAC)
+add_executable(ocam_verify 
+    src/ocam_verify.cpp
+)
+target_link_libraries(ocam_verify 
+    /mnt/d327cf14-2b9b-4977-955d-e19c9242ea1a/deqi/r_calib/third_party/jsoncpp/build/lib/libjsoncpp.a
+)
+
+# Executable - V4 with multiple stitching modes
+add_executable(run_front3_calib_v4 
+    src/run_front3_calib_v4.cpp
+)
+target_link_libraries(run_front3_calib_v4 
+    ${OpenCV_LIBS} 
+    ${Pangolin_LIBRARIES} 
+    ${Boost_SYSTEM_LIBRARY}
+    /mnt/d327cf14-2b9b-4977-955d-e19c9242ea1a/deqi/r_calib/third_party/jsoncpp/build/lib/libjsoncpp.a
+)
