@@ -5,7 +5,8 @@
  * New Features:
  * - Multiple stitching modes: FL+FR, FL+F, F+FR, FL+F+FR
  * - Single camera views: FL, F, FR
- * venv) nio@PC1Y47SH:/mnt/d327cf14-2b9b-4977-955d-e19c9242ea1a/deqi/r_calib/third_party/SensorsCalibration/surround-camera/manual_calib_front3$ cd build/ && make -j4 && cd .. && ./bin/run_front3_calib_v4 ./2_dog/imgs/ ./2_dog/param/ ./2_dog/param/camera_extrinsics_ikalibr.json5 
+ * venv) nio@PC1Y47SH:/mnt/d327cf14-2b9b-4977-955d-e19c9242ea1a/deqi/r_calib/third_party/SensorsCalibration/surround-camera/manual_calib_front3$ 
+ * cd build/ && make -j4 && cd .. && ./bin/run_front3_calib_v4 ./2_dog/imgs/ ./2_dog/param/ ./2_dog/param/camera_extrinsics_ikalibr.json5 
  */
 #include <boost/filesystem.hpp>
 #include <opencv2/opencv.hpp>

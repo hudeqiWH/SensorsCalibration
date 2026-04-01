@@ -1,7 +1,9 @@
 /*
  * Copyright (C) 2024 - Rewritten for new camera/param format
  * Based on auto_calib_fisheye/test_bev_simple.cpp
- */
+ * (venv) nio@PC1Y47SH:/mnt/d327cf14-2b9b-4977-955d-e19c9242ea1a/deqi/r_calib/third_party/SensorsCalibration/surround-camera/manual_calib_new$ 
+ * cd build/ && make -j4 && cd .. && ./bin/run_avm_new ./2_dog/imgs/ ./2_dog/param/ ./2_dog/param/camera_extrinsics_ikalibr.json5
+ * */
 #include <boost/filesystem.hpp>
 #include <opencv2/opencv.hpp>
 #include <pangolin/pangolin.h>
