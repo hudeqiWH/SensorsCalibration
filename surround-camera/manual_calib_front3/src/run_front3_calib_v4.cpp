@@ -628,9 +628,17 @@ int main(int argc, char **argv) {
     pangolin::Var<bool> btnSelectFR("cp.Cam: FR", false, false);
     pangolin::Var<string> currentCamera("cp.Current", "FL");
     
-    pangolin::Var<double> degreeStep("cp.deg step", 0.5, 0.1, 5);
-    pangolin::Var<double> tStep("cp.t(cm)", 5, 0, 100);
+    // Degree step slider - continuous range with exponential-like scale
+    pangolin::Var<double> degreeStep("cp.deg step", 0.5, 0.01, 4.0);
+    
+    // Translation step slider (in cm) - continuous range
+    pangolin::Var<double> tStep("cp.t step(cm)", 0.2, 0.01, 4.0);
+    
     pangolin::Var<double> wallDist("cp.wall(m)", wall_distance, 1, 20);
+    
+    // Predefined exponential step values
+    const double deg_steps[] = {0.01, 0.02, 0.04, 0.08, 0.1, 0.2, 0.4, 0.8, 1.0, 2.0, 4.0};
+    const double t_steps_cm[] = {0.01, 0.02, 0.04, 0.08, 0.1, 0.2, 0.4, 0.8, 1.0, 2.0, 4.0};
     
     // View mode buttons
     pangolin::Var<bool> btnViewAll("cp.View: All", false, false);
@@ -741,16 +749,18 @@ int main(int argc, char **argv) {
             cout << "Selected camera: FR (front_right)" << endl;
         }
         
+        // Handle degree step slider change
         if (degreeStep.GuiChanged()) {
             cali_scale_degree_ = degreeStep.Get();
             CalibrationScaleChange(cali_frame);
-            cout << "Degree step: " << cali_scale_degree_ << endl;
+            cout << "Degree step: " << cali_scale_degree_ << "°" << endl;
         }
         
+        // Handle translation step slider change (convert cm to m)
         if (tStep.GuiChanged()) {
-            cali_scale_trans_ = tStep.Get() / 100.0;
+            cali_scale_trans_ = tStep.Get() / 100.0;  // Convert cm to meters
             CalibrationScaleChange(cali_frame);
-            cout << "Trans step: " << cali_scale_trans_ * 100 << " cm" << endl;
+            cout << "Trans step: " << tStep.Get() << "cm" << endl;
         }
         
         if (wallDist.GuiChanged()) {
