@@ -1,10 +1,10 @@
 {
     "extrinsic_param": {
-        "front_left": {
+        "front_left": { // front 120
             "rotation": [-1.15926, 1.25642, -1.14246],
             "translation": [0.0153667, 0.0110548, 0.45823]
         },
-        "park_front": {
+        "park_front": { // park front
             "rotation": [-1.14336, 1.19845, -1.19552],
             "translation": [0.0738189, -0.00652243, 0.143207]
         },

@@ -1,0 +1,16 @@
+{
+    "extrinsic_param": {
+        "front_left": {
+            "rotation": [-1.23628, 1.19508, -1.20154],
+            "translation": [0.5, 0.177091, 0.915763]
+        },
+        "park_front": {
+            "rotation": [-1.24609, 1.20208, -1.23002],
+            "translation": [0.5, 0.0, 0.9]
+        },
+        "front_right": {
+            "rotation": [-1.22586, 1.22174, -1.20541],
+            "translation": [0.5, -0.20197, 0.9]
+        }
+    }
+}

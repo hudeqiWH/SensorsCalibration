@@ -6,7 +6,8 @@
  * - Multiple stitching modes: FL+FR, FL+F, F+FR, FL+F+FR
  * - Single camera views: FL, F, FR
  * venv) nio@PC1Y47SH:/mnt/d327cf14-2b9b-4977-955d-e19c9242ea1a/deqi/r_calib/third_party/SensorsCalibration/surround-camera/manual_calib_front3$ 
- * cd build/ && make -j4 && cd .. && ./bin/run_front3_calib_v4 ./2_dog/imgs/ ./2_dog/param/ ./2_dog/param/camera_extrinsics_ikalibr.json5 
+ * cd build/ && make -j4 && cd .. && ./bin/run_front3_calib_v4 ./2_dog/imgs/ ./2_dog/param/ ./2_dog/param/camera_extrinsics_ikalibr.json5 [wall_distance_m]
+ *   wall_distance_m: optional, default 1.8m
  */
 #include <boost/filesystem.hpp>
 #include <opencv2/opencv.hpp>
@@ -75,7 +76,7 @@ double cali_scale_trans_ = 0.05;   // Default translation step (meters = 5cm)
 int view_mode = 0;  // 0=ALL, 1=FL, 2=F, 3=FR, 4=FL+FR, 5=FL+F, 6=F+FR
 
 // Front wall projection parameters (单位: 米)
-double wall_distance = 3.0;       // Default changed to 3m
+double wall_distance = 1.8;       // Default: 1.8m, can be overridden by command line arg[4]
 double wall_width = 12.0;
 double wall_height = 6.0;
 double wall_center_y = 0.0;
@@ -551,9 +552,10 @@ string getViewModeName() {
 
 int main(int argc, char **argv) {
     if (argc < 4) {
-        cout << "Usage: ./run_front3_calib_v4 <image_path> <intrinsic_path> <extrinsic_json>" << endl;
+        cout << "Usage: ./run_front3_calib_v4 <image_path> <intrinsic_path> <extrinsic_json> [wall_distance_m]" << endl;
         cout << "\nExample:" << endl;
         cout << "  ./run_front3_calib_v4 ./imgs ./intrinsics ./extrinsics.json" << endl;
+        cout << "  ./run_front3_calib_v4 ./imgs ./intrinsics ./extrinsics.json 5.0   # wall at 5m" << endl;
         cout << "\nView Modes:" << endl;
         cout << "  - FL+F+FR: All three cameras (default)" << endl;
         cout << "  - FL+FR: Left and right side cameras only" << endl;
@@ -566,6 +568,15 @@ int main(int argc, char **argv) {
     string image_path = argv[1];
     string intrinsic_path = argv[2];
     string extrinsic_file = argv[3];
+    
+    // Optional: wall distance from command line (default 1.8m)
+    if (argc >= 5) {
+        wall_distance = atof(argv[4]);
+        if (wall_distance <= 0) {
+            cerr << "Warning: invalid wall_distance " << argv[4] << ", using default 1.8m" << endl;
+            wall_distance = 1.8;
+        }
+    }
     
     cout << "==========================================" << endl;
     cout << "Front 3 Cameras Manual Calibration (V4)" << endl;
@@ -599,6 +610,7 @@ int main(int argc, char **argv) {
     CalibrationInit();
     
     cout << "\nGenerating wall projections..." << endl;
+    cout << "  Wall distance: " << wall_distance << " m" << endl;
     updateAllProjections();
     cout << "  Done" << endl;
     
