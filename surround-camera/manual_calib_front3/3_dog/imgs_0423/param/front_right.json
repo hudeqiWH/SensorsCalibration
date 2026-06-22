@@ -1,0 +1,42 @@
+{
+    "name": "front_right",
+    "intrinsic_param": {
+        "camera_height": 2168,
+        "camera_matrix": [
+            [
+                1869.2147216796875,
+                0.0,
+                1923.04541015625
+            ],
+            [
+                0.0,
+                1869.2147216796875,
+                1073.010986328125
+            ],
+            [
+                0.0,
+                0.0,
+                1.0
+            ]
+        ],
+        "camera_model": 4,
+        "camera_width": 3848,
+        "distortion_coeffcients": [
+            -0.02353128418326378,
+            0.006096024066209793,
+            -0.0008153219241648912,
+            -0.0006927535869181156
+        ],
+        "distortion_model": "opencv-fisheye elements",
+        "spline_camera_model": {
+            "based_on_counter": 1,
+            "control_point_data": [],
+            "is_valid": true,
+            "knot_interval_x": 100.0,
+            "knot_interval_y": 100.0,
+            "knot_start_x": 0.0,
+            "knot_start_y": 0.0,
+            "order": 2
+        }
+    }
+}
